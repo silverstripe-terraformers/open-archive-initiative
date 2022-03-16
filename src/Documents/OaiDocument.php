@@ -126,7 +126,7 @@ abstract class OaiDocument
     {
         // Check that the error code is one that is supported by the OAI spec
         // @see http://www.openarchives.org/OAI/openarchivesprotocol.html#ErrorConditions
-        if (!in_array($errorCode, self::ERROR_CODES)) {
+        if (!in_array($errorCode, self::ERROR_CODES, true)) {
             throw new Exception('Unknown error code provided');
         }
 

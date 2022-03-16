@@ -8,6 +8,7 @@ use SilverStripe\Control\Director;
 use SilverStripe\Control\HTTPRequest;
 use SilverStripe\Control\HTTPResponse;
 use SilverStripe\Core\Environment;
+use SilverStripe\ORM\FieldType\DBDatetime;
 use SilverStripe\SiteConfig\SiteConfig;
 use Terraformers\OpenArchive\Documents\Errors\BadVerbDocument;
 use Terraformers\OpenArchive\Documents\IdentifyDocument;
@@ -52,7 +53,7 @@ class OaiController extends Controller
 
         $verb = $request->getVar('verb');
 
-        if (!$verb || !in_array($verb, $this->config()->get('supported_verbs'))) {
+        if (!$verb || !in_array($verb, $this->config()->get('supported_verbs'), true)) {
             return $this->BadVerbResponse($request);
         }
 
@@ -89,8 +90,10 @@ class OaiController extends Controller
 
         $requestUrl = sprintf('%s%s', Director::absoluteBaseURL(), $request->getURL());
 
+        $this->extend('updateOaiRequestUrl', $requestUrl);
+
         $xmlDocument = IdentifyDocument::create();
-        $xmlDocument->setResponseDate();
+        $xmlDocument->setResponseDate($this->getResponseDate());
         $xmlDocument->setRequestUrl($requestUrl);
         $xmlDocument->setBaseURL($requestUrl);
         $xmlDocument->setProtocolVersion($this->config()->get('supportedProtocol'));
@@ -139,24 +142,31 @@ class OaiController extends Controller
         return $this->getResponse();
     }
 
-    /**
-     * Default method just returns 0 - indicating that our Datestamps can go back to January 1, 1970
-     *
-     * You can override this method to return a different (maybe "smarter") value
-     */
-    protected function getEarliestDatestamp(): int
+    protected function getResponseDate(): int
     {
-        return 0;
+        $timestamp = DBDatetime::now()->getTimestamp();
+
+        $this->extend('updateOaiResponseDate', $timestamp);
+
+        return $timestamp;
     }
 
-    /**
-     * Default method just returns our Site Title
-     *
-     * You can override this method if you wish to return some other value
-     */
+    protected function getEarliestDatestamp(): int
+    {
+        $timestamp = 0;
+
+        $this->extend('updateOaiEarliestDatestamp', $timestamp);
+
+        return $timestamp;
+    }
+
     protected function getRepositoryName(): string
     {
-        return SiteConfig::current_site_config()->Title;
+        $repositoryName = SiteConfig::current_site_config()->Title;
+
+        $this->extend('updateOaiRepositoryName', $repositoryName);
+
+        return $repositoryName;
     }
 
 }

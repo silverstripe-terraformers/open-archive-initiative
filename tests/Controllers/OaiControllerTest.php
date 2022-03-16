@@ -9,6 +9,8 @@ use Terraformers\OpenArchive\Documents\OaiDocument;
 class OaiControllerTest extends FunctionalTest
 {
 
+    protected $usesDatabase = true; // phpcs:ignore
+
     public function testXmlResponseHeader(): void
     {
         $response = $this->get('/api/v1/oai');

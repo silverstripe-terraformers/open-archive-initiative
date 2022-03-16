@@ -12,6 +12,8 @@ use Terraformers\OpenArchive\Tests\Mocks\BaseDocument;
 class IdentifyDocumentTest extends SapphireTest
 {
 
+    protected $usesDatabase = true; // phpcs:ignore
+
     public function testConstruct(): void
     {
         $document = IdentifyDocument::create();

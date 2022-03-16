@@ -12,6 +12,8 @@ use Terraformers\OpenArchive\Tests\Mocks\BaseDocument;
 class OaiDocumentTest extends SapphireTest
 {
 
+    protected $usesDatabase = true; // phpcs:ignore
+
     public function testConstruct(): void
     {
         $document = BaseDocument::create();

@@ -1,5 +1,5 @@
 ---
-name: openarchive-routes
+name: terraformers-openarchive-routes
 After:
   - '#rootroutes'
   - '#coreroutes'

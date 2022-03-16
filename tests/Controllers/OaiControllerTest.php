@@ -2,9 +2,9 @@
 
 namespace Terraformers\OpenArchive\Tests\Controllers;
 
-use Terraformers\OpenArchive\Documents\OaiDocument;
 use SilverStripe\Dev\FunctionalTest;
 use SimpleXMLElement;
+use Terraformers\OpenArchive\Documents\OaiDocument;
 
 class OaiControllerTest extends FunctionalTest
 {

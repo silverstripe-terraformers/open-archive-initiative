@@ -2,11 +2,6 @@
 
 namespace Terraformers\OpenArchive\Controllers;
 
-use Terraformers\OpenArchive\Documents\Errors\BadVerbDocument;
-use Terraformers\OpenArchive\Documents\IdentifyDocument;
-use Terraformers\OpenArchive\Documents\ListMetadataFormatsDocument;
-use Terraformers\OpenArchive\Documents\ListRecordsDocument;
-use Terraformers\OpenArchive\Documents\OaiDocument;
 use Exception;
 use SilverStripe\Control\Controller;
 use SilverStripe\Control\Director;
@@ -14,6 +9,11 @@ use SilverStripe\Control\HTTPRequest;
 use SilverStripe\Control\HTTPResponse;
 use SilverStripe\Core\Environment;
 use SilverStripe\SiteConfig\SiteConfig;
+use Terraformers\OpenArchive\Documents\Errors\BadVerbDocument;
+use Terraformers\OpenArchive\Documents\IdentifyDocument;
+use Terraformers\OpenArchive\Documents\ListMetadataFormatsDocument;
+use Terraformers\OpenArchive\Documents\ListRecordsDocument;
+use Terraformers\OpenArchive\Documents\OaiDocument;
 
 class OaiController extends Controller
 {

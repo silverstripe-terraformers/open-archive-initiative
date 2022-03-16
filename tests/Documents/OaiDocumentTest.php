@@ -2,12 +2,12 @@
 
 namespace Terraformers\OpenArchive\Tests\Documents;
 
-use Terraformers\OpenArchive\Documents\OaiDocument;
-use Terraformers\OpenArchive\Tests\Mocks\BaseDocument;
 use DOMDocument;
 use DOMElement;
 use ReflectionClass;
 use SilverStripe\Dev\SapphireTest;
+use Terraformers\OpenArchive\Documents\OaiDocument;
+use Terraformers\OpenArchive\Tests\Mocks\BaseDocument;
 
 class OaiDocumentTest extends SapphireTest
 {

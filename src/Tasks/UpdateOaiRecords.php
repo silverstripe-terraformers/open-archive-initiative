@@ -21,7 +21,7 @@ class UpdateOaiRecords extends BuildTask
     /**
      * @param HTTPRequest $request
      */
-    public function run($request) // phpcs:ignore SlevomatCodingStandard.TypeHints
+    public function run($request) // phpcs:ignore
     {
         /** @var DataList|OaiRecord[] $oaiRecords */
         $oaiRecords = OaiRecord::get();

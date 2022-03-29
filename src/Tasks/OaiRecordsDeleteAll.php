@@ -19,7 +19,7 @@ class OaiRecordsDeleteAll extends BuildTask
     /**
      * @param HTTPRequest $request
      */
-    public function run($request) // phpcs:ignore SlevomatCodingStandard.TypeHints
+    public function run($request) // phpcs:ignore
     {
         DB::query(sprintf('truncate table %s', OaiRecord::config()->get('table_name')));
 

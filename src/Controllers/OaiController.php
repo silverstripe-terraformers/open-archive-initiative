@@ -57,9 +57,9 @@ class OaiController extends Controller
         'oai_dc' => OaiDcFormatter::class,
     ];
 
-    private static string $supportedProtocol = '2.0';
+    private static string $supported_protocol = '2.0';
 
-    private static string $supportedDeletedRecord = self::DELETED_SUPPORT_PERSISTENT;
+    private static string $supported_deleted_record = self::DELETED_SUPPORT_PERSISTENT;
 
     /**
      * All dates provided by the OAI repository must be ISO8601, and with an additional requirement that only "zulu" is
@@ -68,13 +68,13 @@ class OaiController extends Controller
      *
      * @see http://www.openarchives.org/OAI/openarchivesprotocol.html#Dates
      */
-    private static string $supportedGranularity = 'YYYY-MM-DDThh:mm:ssZ';
+    private static string $supported_granularity = 'YYYY-MM-DDThh:mm:ssZ';
 
     /**
      * For verbs that use Resumption Tokens, this is the configuration that controls how many OAI Records we will load
      * into a single response
      */
-    private static string $oaiRecordsPerPage = '100';
+    private static string $oai_records_per_page = '100';
 
     public function index(HTTPRequest $request): HTTPResponse
     {
@@ -129,11 +129,11 @@ class OaiController extends Controller
         // Base URL defaults to the current URL. Extension point is provided in this method
         $xmlDocument->setBaseUrl($this->getBaseUrl($request));
         // Protocol Version defaults to 2.0. You can update the configuration if required
-        $xmlDocument->setProtocolVersion($this->config()->get('supportedProtocol'));
+        $xmlDocument->setProtocolVersion($this->config()->get('supported_protocol'));
         // Deleted Record support defaults to "persistent". You can update the configuration if required
-        $xmlDocument->setDeletedRecord($this->config()->get('supportedDeletedRecord'));
+        $xmlDocument->setDeletedRecord($this->config()->get('supported_deleted_record'));
         // Date Granularity support defaults to date and time. You can update the configuration if required
-        $xmlDocument->setGranularity($this->config()->get('supportedGranularity'));
+        $xmlDocument->setGranularity($this->config()->get('supported_granularity'));
         // You should set your env var appropriately for this value
         $xmlDocument->setAdminEmail(Environment::getEnv(OaiController::OAI_API_ADMIN_EMAIL));
         // Earliest Datestamp defaults to the Jan 1970 (the start of UNIX). Extension point is provided in this method
@@ -247,7 +247,7 @@ class OaiController extends Controller
         $oaiRecords = $this->fetchOaiRecords($fromLocal, $untilLocal, $set);
 
         // Set the page length and current page of our Paginated list
-        $oaiRecords->setPageLength($this->config()->get('oaiRecordsPerPage'));
+        $oaiRecords->setPageLength($this->config()->get('oai_records_per_page'));
         $oaiRecords->setCurrentPage($currentPage);
 
         // If there are no results after we apply filters and pagination, then we should return an error response
@@ -331,7 +331,7 @@ class OaiController extends Controller
     }
 
     /**
-     * Regarding dates, please @see $supportedGranularity docblock. All dates passed to this method should already be
+     * Regarding dates, please @see $supported_granularity docblock. All dates passed to this method should already be
      * adjusted to local server time
      */
     protected function fetchOaiRecords(?string $from = null, ?string $until = null, ?int $set = null): PaginatedList

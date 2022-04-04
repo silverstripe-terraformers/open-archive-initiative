@@ -116,6 +116,10 @@ class ResumptionTokenHelper
 
     protected static function getResumptionTokenParts(string $resumptionToken): array
     {
+        if (!$resumptionToken) {
+            return [];
+        }
+
         $decode = base64_decode($resumptionToken, true);
 
         // We can't do anything with an invalid encoded value

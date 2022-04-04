@@ -76,6 +76,13 @@ class OaiController extends Controller
      */
     private static string $oai_records_per_page = '100';
 
+    /**
+     * The expiration time (in seconds) of any resumption tokens that are generated. Default is 60 minutes
+     *
+     * Set this to null if you want an infinite duration
+     */
+    private static ?int $resumption_token_expiry = 3600;
+
     public function index(HTTPRequest $request): HTTPResponse
     {
         $this->getResponse()->addHeader('Content-type', 'text/xml');
@@ -271,6 +278,10 @@ class OaiController extends Controller
             );
 
             $xmlDocument->setResumptionToken($newResumptionToken);
+        } elseif ($resumptionToken) {
+            // If this is the last page of a request that included a Resumption Token, then we specifically need to add
+            // an empty Token - indicating that the list is now complete
+            $xmlDocument->setResumptionToken('');
         }
 
         return $this->getResponseWithDocumentBody($xmlDocument);

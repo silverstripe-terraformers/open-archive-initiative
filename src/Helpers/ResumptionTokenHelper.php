@@ -3,6 +3,8 @@
 namespace Terraformers\OpenArchive\Helpers;
 
 use Exception;
+use SilverStripe\ORM\FieldType\DBDatetime;
+use Terraformers\OpenArchive\Controllers\OaiController;
 
 /**
  * Resumption Tokens are a form of pagination, however, they also contain a level of validation.
@@ -30,6 +32,16 @@ class ResumptionTokenHelper
             'page' => $page,
             'verb' => $verb,
         ];
+
+        // Check to see if we want to give our Tokens an expiry date
+        $tokenExpiryLength = OaiController::config()->get('resumption_token_expiry');
+
+        if ($tokenExpiryLength) {
+            // Set the expiry date for a time in the future matching the expiry length
+            $parts['expiry'] = DateTimeHelper::getUtcStringFromLocal(
+                date('Y-m-d H:i:s', DBDatetime::now()->getTimestamp() + $tokenExpiryLength)
+            );
+        }
 
         if ($from) {
             $parts['from'] = $from;
@@ -61,6 +73,7 @@ class ResumptionTokenHelper
         $resumptionFrom = $resumptionParts['from'] ?? null;
         $resumptionUntil = $resumptionParts['until'] ?? null;
         $resumptionSet = $resumptionParts['set'] ?? null;
+        $resumptionExpiry = $resumptionParts['expiry'] ?? null;
 
         // Every Resumption Token should include (at the very least) the active page, if it doesn't, then it's invalid
         if (!$resumptionPage) {
@@ -76,8 +89,29 @@ class ResumptionTokenHelper
             throw new Exception('Invalid resumption token');
         }
 
+        // The duration that each Token lives (in seconds)
+        $tokenExpiryLength = OaiController::config()->get('resumption_token_expiry');
+
+        // The duration has been set to infinite, so we can return now
+        if (!$tokenExpiryLength) {
+            return $resumptionPage;
+        }
+
+        // If the current time is greater than the expiry date of the Resumption Token, then this Token is invalid
+        // Note: strtotime() already converts UTC date strings (UTC+Z) into local timestamps
+        if (DBDatetime::now()->getTimestamp() > strtotime($resumptionExpiry)) {
+            throw new Exception('Invalid resumption token');
+        }
+
         // The Resumption Token is valid, so we can return whatever value we have for page
         return $resumptionPage;
+    }
+
+    public static function getExpiryFromResumptionToken(string $resumptionToken): ?string
+    {
+        $resumptionParts = static::getResumptionTokenParts($resumptionToken);
+
+        return $resumptionParts['expiry'] ?? null;
     }
 
     protected static function getResumptionTokenParts(string $resumptionToken): array

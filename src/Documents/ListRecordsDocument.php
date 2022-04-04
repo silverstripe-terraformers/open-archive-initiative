@@ -4,6 +4,7 @@ namespace Terraformers\OpenArchive\Documents;
 
 use SilverStripe\ORM\PaginatedList;
 use Terraformers\OpenArchive\Formatters\OaiRecordFormatter;
+use Terraformers\OpenArchive\Helpers\ResumptionTokenHelper;
 use Terraformers\OpenArchive\Models\OaiRecord;
 
 class ListRecordsDocument extends OaiDocument
@@ -38,6 +39,14 @@ class ListRecordsDocument extends OaiDocument
         $resumptionTokenElement = $this->findOrCreateElement('resumptionToken', $listRecordsElement);
 
         $resumptionTokenElement->nodeValue = $resumptionToken;
+
+        $tokenExpiry = ResumptionTokenHelper::getExpiryFromResumptionToken($resumptionToken);
+
+        if (!$tokenExpiry) {
+            return;
+        }
+
+        $resumptionTokenElement->setAttribute('expirationDate', $tokenExpiry);
     }
 
 }

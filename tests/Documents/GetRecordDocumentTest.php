@@ -58,7 +58,7 @@ class GetRecordDocumentTest extends SapphireTest
         $this->assertStringContainsString('<header>', $extractedDocumentBody);
         $this->assertStringContainsString('<identifier>', $extractedDocumentBody);
         $this->assertStringContainsString('<datestamp>', $extractedDocumentBody);
-        $this->assertStringNotContainsString('<header status="deleted">', $processedDocumentBody);
+        $this->assertStringNotContainsString('<header status="deleted">', $extractedDocumentBody);
 
         // Simulate the deletion of a document
         $page->doArchive();

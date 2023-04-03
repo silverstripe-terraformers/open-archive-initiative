@@ -58,7 +58,7 @@ class GetRecordDocumentTest extends SapphireTest
         $this->assertStringContainsString('<header>', $extractedDocumentBody);
         $this->assertStringContainsString('<identifier>', $extractedDocumentBody);
         $this->assertStringContainsString('<datestamp>', $extractedDocumentBody);
-        $this->assertStringNotContainsString("<status>deleted</status>", $extractedDocumentBody);
+        $this->assertStringNotContainsString('<header status="deleted">', $processedDocumentBody);
 
         // Simulate the deletion of a document
         $page->doArchive();
@@ -77,11 +77,11 @@ class GetRecordDocumentTest extends SapphireTest
         $processedDocumentBody = $xmlDocument->getDocumentBody();
 
         // Check that our 'header' element now contains a 'status' attribute
+        $this->assertStringContainsString('<header status="deleted">', $processedDocumentBody);
+        // There should also be a non-deleted header element present.
         $this->assertStringContainsString('<header>', $processedDocumentBody);
         $this->assertStringContainsString('<identifier>', $processedDocumentBody);
         $this->assertStringContainsString('<datestamp>', $processedDocumentBody);
-        $this->assertStringContainsString('status="deleted"', $processedDocumentBody);
-        $this->assertStringNotContainsString("<status>deleted</status>", $processedDocumentBody);
     }
 
 }

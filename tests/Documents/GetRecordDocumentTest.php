@@ -15,7 +15,10 @@ class GetRecordDocumentTest extends SapphireTest
 
     protected static $fixture_file = 'GetRecordDocumentTest.yml'; // phpcs:ignore
 
-    protected static array $required_extensions = [
+    /**
+     * @var array
+     */
+    protected static $required_extensions = [
         SiteTree::class => [
             VersionedOaiRecordManager::class,
             SiteTreeExtension::class,

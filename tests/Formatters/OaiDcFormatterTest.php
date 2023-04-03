@@ -14,7 +14,7 @@ class OaiDcFormatterTest extends SapphireTest
 
     protected static $fixture_file = 'OaiDcFormatterTest.yml'; // phpcs:ignore
 
-    protected static $required_extensions = [
+    protected static array $required_extensions = [
         SiteTree::class => [
             VersionedOaiRecordManager::class,
             SiteTreeExtension::class,

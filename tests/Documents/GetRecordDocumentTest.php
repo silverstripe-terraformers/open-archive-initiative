@@ -2,14 +2,12 @@
 
 namespace Terraformers\OpenArchive\Tests\Documents;
 
-use SilverStripe\Assets\File;
 use SilverStripe\CMS\Model\SiteTree;
 use SilverStripe\Dev\SapphireTest;
 use Terraformers\OpenArchive\Documents\GetRecordDocument;
 use Terraformers\OpenArchive\Extensions\VersionedOaiRecordManager;
 use Terraformers\OpenArchive\Formatters\OaiDcFormatter;
 use Terraformers\OpenArchive\Jobs\OaiRecordUpdateJob;
-use Terraformers\OpenArchive\Tests\Mocks\FileExtension;
 use Terraformers\OpenArchive\Tests\Mocks\SiteTreeExtension;
 
 class GetRecordDocumentTest extends SapphireTest
@@ -17,7 +15,7 @@ class GetRecordDocumentTest extends SapphireTest
 
     protected static $fixture_file = 'GetRecordDocumentTest.yml'; // phpcs:ignore
 
-    protected static $required_extensions = [
+    protected static array $required_extensions = [
         SiteTree::class => [
             VersionedOaiRecordManager::class,
             SiteTreeExtension::class,

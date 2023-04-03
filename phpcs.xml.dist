@@ -17,6 +17,11 @@
         <exclude name="PSR2.Classes.ClassDeclaration.CloseBraceAfterBody"/>
     </rule>
 
+    <!-- Do not require Test classes to define Type Hints - we're forced to exclude them due to how we extend -->
+    <rule ref="SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingAnyTypeHint">
+        <exclude-pattern>app/tests/*</exclude-pattern>
+    </rule>
+
     <!-- All "use" statements must be used in the code. -->
     <rule ref="./vendor/slevomat/coding-standard/SlevomatCodingStandard/ruleset.xml">
         <!-- Comments after code are fine. It's how we disable rules when we need to -->

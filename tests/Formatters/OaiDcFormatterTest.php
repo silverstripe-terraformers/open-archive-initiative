@@ -15,7 +15,7 @@ class OaiDcFormatterTest extends SapphireTest
     protected static $fixture_file = 'OaiDcFormatterTest.yml'; // phpcs:ignore
 
     /**
-     * @var array
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
     protected static $required_extensions = [
         SiteTree::class => [

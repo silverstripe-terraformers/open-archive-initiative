@@ -16,7 +16,7 @@ class GetRecordDocumentTest extends SapphireTest
     protected static $fixture_file = 'GetRecordDocumentTest.yml'; // phpcs:ignore
 
     /**
-     * @var array
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
     protected static $required_extensions = [
         SiteTree::class => [

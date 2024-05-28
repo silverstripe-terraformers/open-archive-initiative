@@ -24,7 +24,8 @@ class OaiControllerTest extends FunctionalTest
     /**
      * @dataProvider badVerbUrlProvider
      */
-    public function testBadVerbResponse(string $requestUrl): void
+    public function testBadVerbResponse
+    (string $requestUrl): void
     {
         $response = $this->get($requestUrl);
         // Strip the get params for assertions to follow

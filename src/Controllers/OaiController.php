@@ -108,7 +108,7 @@ class OaiController extends Controller
 
     protected function BadVerbResponse(HTTPRequest $request): HTTPResponse
     {
-        $requestUrl = sprintf('%s%s', Director::absoluteBaseURL(), $request->getURL());
+        $requestUrl = Director::absoluteURL($request->getURL());
 
         $xmlDocument = BadVerbDocument::create();
         $xmlDocument->setRequestUrl($requestUrl);
@@ -118,7 +118,7 @@ class OaiController extends Controller
 
     protected function CannotDisseminateFormatResponse(HTTPRequest $request): HTTPResponse
     {
-        $requestUrl = sprintf('%s%s', Director::absoluteBaseURL(), $request->getURL());
+        $requestUrl = Director::absoluteURL($request->getURL());
 
         $xmlDocument = CannotDisseminateFormatDocument::create();
         $xmlDocument->setRequestUrl($requestUrl);
@@ -160,7 +160,7 @@ class OaiController extends Controller
      */
     protected function ListMetadataFormats(HTTPRequest $request): HTTPResponse
     {
-        $requestUrl = sprintf('%s%s', Director::absoluteBaseURL(), $request->getURL());
+        $requestUrl = Director::absoluteURL($request->getURL());
 
         $xmlDocument = ListMetadataFormatsDocument::create();
         $xmlDocument->setRequestUrl($requestUrl);
@@ -364,7 +364,7 @@ class OaiController extends Controller
 
     protected function getRequestUrl(HTTPRequest $request): string
     {
-        $requestUrl = sprintf('%s%s', Director::absoluteBaseURL(), $request->getURL());
+        $requestUrl = Director::absoluteURL($request->getURL());
 
         $this->extend('updateOaiRequestUrl', $requestUrl);
 
@@ -373,7 +373,7 @@ class OaiController extends Controller
 
     protected function getBaseUrl(HTTPRequest $request): string
     {
-        $baseUrl = sprintf('%s%s', Director::absoluteBaseURL(), $request->getURL());
+        $baseUrl = Director::absoluteURL($request->getURL());
 
         $this->extend('updateOaiBaseUrl', $baseUrl);
 
